@@ -247,6 +247,17 @@ create table if not exists public.audit_log (
   created_at    timestamptz not null default now()
 );
 
+-- ---------------------------------------------------------------------------
+-- 14. admin_secrets
+-- Independent admin credential store used by the database-backed login,
+-- unaffected by third-party (GoTrue) auth outages.
+create table if not exists public.admin_secrets (
+  email         text primary key,
+  password_hash text not null,
+  created_at    timestamptz not null default now(),
+  updated_at    timestamptz not null default now()
+);
+
 -- ============================================================================
 -- Indexes
 -- ============================================================================
@@ -260,6 +271,7 @@ create index if not exists idx_admissions_status     on public.admissions (statu
 create index if not exists idx_admissions_created    on public.admissions (created_at desc);
 create index if not exists idx_media_created         on public.media (created_at desc);
 create index if not exists idx_audit_created         on public.audit_log (created_at desc);
+create index if not exists idx_admin_secrets_email   on public.admin_secrets (email);
 
 -- ============================================================================
 -- Row Level Security — enable on every table
@@ -277,6 +289,7 @@ alter table public.admissions       enable row level security;
 alter table public.media            enable row level security;
 alter table public.social_links     enable row level security;
 alter table public.audit_log        enable row level security;
+alter table public.admin_secrets    enable row level security;
 
 -- ============================================================================
 -- RLS Policies
@@ -495,7 +508,7 @@ on conflict (id) do nothing;
 insert into public.hero_content (id, badge, headline, subheading, primary_cta_text, primary_cta_link, secondary_cta_text, secondary_cta_link, image_url, image_alt, published)
 values (1,
   'Daycare – Grade 4 · Kakamega, Kenya',
-  'Nurturing Excellence from the Very First Step.',
+  'WINGS TO EVERY DREAM',
   'Premium Daycare, Pre-Primary, and Junior School learning in Kakamega Town.',
   'Explore Admissions',
   '/admissions',

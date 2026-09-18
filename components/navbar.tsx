@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/shared/button";
 import type { SchoolSettings } from "@/lib/types/school";
@@ -50,8 +51,15 @@ export function Navbar({ settings }: { settings: SchoolSettings }) {
           className="flex min-w-0 items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sunflower-400"
           aria-label={`${settings.schoolName} — home`}
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-royal-800 shadow-sm">
-            <Sparkles className="h-5 w-5 text-sunflower-400" aria-hidden="true" />
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-royal-100">
+            <Image
+              src="/images/brooklite-logo.jpg"
+              alt="Brooklite Premier School logo"
+              width={40}
+              height={40}
+              className="h-full w-full object-cover"
+              priority
+            />
           </span>
           <span className="min-w-0 truncate font-display text-base font-bold leading-tight text-royal-950 sm:text-lg">
             Brooklite

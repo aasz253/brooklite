@@ -65,7 +65,7 @@ export function HeroEditor({ hero }: { hero: HeroContent }) {
       </div>
 
       <AdminField label="Headline">
-        <AdminInput placeholder="Nurturing Excellence from the Very First Step." {...register("headline")} />
+        <AdminInput placeholder="WINGS TO EVERY DREAM" {...register("headline")} />
         {errors.headline ? <p className="mt-1 text-xs font-medium text-red-600">{errors.headline.message}</p> : null}
       </AdminField>
 

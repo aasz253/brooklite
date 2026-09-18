@@ -26,7 +26,7 @@ export const defaultSchoolSettings: SchoolSettings = {
 export const defaultHero: HeroContent = {
   id: 1,
   badge: "Daycare – Grade 4 · Kakamega, Kenya",
-  headline: "Nurturing Excellence from the Very First Step.",
+  headline: "WINGS TO EVERY DREAM",
   subheading: "Premium Daycare, Pre-Primary, and Junior School learning in Kakamega Town.",
   primaryCtaText: "Explore Admissions",
   primaryCtaLink: "/admissions",
