@@ -57,29 +57,57 @@ npm run dev                  # http://localhost:3000
 
 1. Create a project on [supabase.com](https://supabase.com).
 2. Open the **SQL Editor** and run the contents of `supabase/schema.sql`.
-   This creates all 13 tables, indexes, functions, Row-Level Security policies,
-   the `school-images` storage bucket + policies, and seed content
+   This creates all 13 tables, indexes, functions, Row-Level Security policies and seed content
    (default hero, classes, statistics, fees placeholders, calendar events, social links).
-3. Create your first admin user in SQL:
+   The script is idempotent — safe to re-run.
+3. Create the **`school-images` storage bucket** (the SQL cannot always create it reliably):
+   Dashboard → **Storage → New bucket** → name `school-images`, **Public bucket: ON**,
+   file size limit `5242880` (5 MB), allowed MIME types `image/jpeg`, `image/png`, `image/webp`.
+   (The storage RLS policies were already created by the schema in step 2.)
+4. Create your first admin user with one self-contained script (no need to copy UUIDs):
 
    ```sql
-   select services.crypto_uid();
-   -- use the returned UUID below; this is just an example:
-   insert into auth.users (id, email, encrypted_password, email_confirmed_at)
-   values (
-     '<uuid-from-above>',
+   insert into auth.users (
+     instance_id, id, aud, role, email, encrypted_password,
+     email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+   ) values (
+     '00000000-0000-0000-0000-000000000000',
+     gen_random_uuid(),
+     'authenticated',
+     'authenticated',
      'admin@brooklitepremier.co.ke',
      crypt('ChangeMe123!', gen_salt('bf')),
+     now(),
+     '{"provider":"email","providers":["email"]}'::jsonb,
+     '{}'::jsonb,
+     now(),
      now()
    );
 
-   insert into public.admin_profiles (id, email, full_name, role)
-   values ('<uuid-from-above>', 'admin@brooklitepremier.co.ke', 'School Admin', 'admin');
+   insert into public.admin_profiles (id, email, full_name, role, is_active)
+   select id, email, 'Head Admin', 'admin', true
+   from auth.users
+   where email = 'admin@brooklitepremier.co.ke';
    ```
 
-   (Alternatively create the user through Supabase Auth in the dashboard and then insert
-   the matching row into `admin_profiles` with the same `id`.)
-4. Log in at `/admin`, then publish the seeded content you want live.
+5. In **Project Settings → API** (or **Auth/API keys**), copy the **`service_role`** key
+   and add it to `.env.local` as `SUPABASE_SERVICE_ROLE_KEY`. (On new projects the service-role
+   key may appear as the “Secret key”, `sb_secret_…`; either works with
+   `@supabase/supabase-js`.) Public pages work without it; the admin CMS does not.
+6. Log in at `/admin`, then publish the seeded content you want live.
+
+## Deploy to Vercel
+
+1. Push this repo to GitHub.
+2. On [vercel.com](https://vercel.com) → **Add New → Project** → import the repo.
+3. Add the same four env vars from the table above (set `NEXT_PUBLIC_SITE_URL`
+   to the Vercel domain, e.g. `https://brooklite.vercel.app`). Values live in
+   `.env.local` locally — never commit that file.
+4. Deploy. The `engines` field in `package.json` pins Node ≥ 22 for the build.
+5. Open the deployed `/admin` and log in with your admin credentials.
+
+> The `service_role` key must be set for the admin CMS to work in production.
+> Projects loading `.env.local` locally are fine without it for public pages.
 
 ## Commands
 
