@@ -35,7 +35,7 @@ export function LoginForm() {
         {pending ? "Signing in…" : "Sign In"}
       </AdminButton>
       <p className="text-center text-xs text-royal-900/45">
-        Authorized administrators only. Your session is protected by Supabase Auth.
+        Authorized administrators only. Your session is protected by a secure database session.
       </p>
     </form>
   );
