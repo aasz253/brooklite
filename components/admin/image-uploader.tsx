@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { ImagePlus, Loader2, Link2, X, Trash2 } from "lucide-react";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { recordMedia, deleteMedia } from "@/app/admin/actions/media";
+import { uploadImage, recordMedia, deleteMedia } from "@/app/admin/actions/media";
 import { cn } from "@/lib/utils";
 
 const ACCEPTED = ["image/jpeg", "image/png", "image/webp"];
@@ -71,21 +70,19 @@ export function ImageUploader({
 
     setUploading(true);
     try {
-      const client = createSupabaseBrowserClient();
       const extension = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
       const safeExtension = extension === "jpeg" ? "jpg" : extension;
       const path = `uploads/${new Date().getFullYear()}/${crypto.randomUUID()}.${safeExtension}`;
 
-      const { error: uploadError } = await client.storage
-        .from("school-images")
-        .upload(path, file, { cacheControl: "3600", upsert: false });
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("path", path);
 
-      if (uploadError) {
-        throw uploadError;
+      const uploadResult = await uploadImage(formData);
+      if (!uploadResult.ok) {
+        throw new Error(uploadResult.message);
       }
-
-      const { data: publicUrlData } = client.storage.from("school-images").getPublicUrl(path);
-      const url = publicUrlData.publicUrl;
+      const url = uploadResult.message;
 
       onChange(url);
       if (!altValue && onAltChange) {
@@ -102,8 +99,8 @@ export function ImageUploader({
         width: dimensions.width || null,
         height: dimensions.height || null,
       });
-    } catch {
-      setError("Upload failed. Please try again.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed. Please try again.");
     } finally {
       setUploading(false);
     }

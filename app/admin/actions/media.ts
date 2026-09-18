@@ -53,6 +53,38 @@ export async function recordMedia(values: unknown): Promise<AdminActionState> {
   return { ok: true, message: "Image recorded." };
 }
 
+export async function uploadImage(formData: FormData): Promise<AdminActionState> {
+  await requireAdmin();
+
+  const file = formData.get("file");
+  const path = formData.get("path");
+
+  if (!(file instanceof File) || typeof path !== "string") {
+    return { ok: false, message: "Invalid upload data." };
+  }
+
+  const service = createSupabaseServiceClient();
+  if (!service) {
+    return { ok: false, message: "Storage is not configured." };
+  }
+
+  const { error: uploadError } = await service.storage.from("school-images").upload(path, file, {
+    cacheControl: "3600",
+    upsert: false,
+    contentType: file.type,
+  });
+
+  if (uploadError) {
+    console.error("[admin] uploadImage storage failed", uploadError.message);
+    return { ok: false, message: `Upload failed: ${uploadError.message}` };
+  }
+
+  const { data: publicUrlData } = service.storage.from("school-images").getPublicUrl(path);
+  const url = publicUrlData.publicUrl;
+
+  return { ok: true, message: url };
+}
+
 /**
  * Deletes a storage object and its media record.
  */
