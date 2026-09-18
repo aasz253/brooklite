@@ -35,26 +35,24 @@ export function AboutSection({ about }: { about: AboutContent | null }) {
         </div>
       </Reveal>
 
-      <StaggerGroup className="grid gap-5">
+      <div>
         <div className="relative overflow-hidden rounded-[2rem] shadow-xl ring-1 ring-royal-100">
           <div className="relative aspect-[4/3]">
-            <Reveal className="h-full">
-              <Image
-                src="/images/classrooms.jpg"
-                alt="Brooklite Premier School bright, child-friendly classroom"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-                loading="lazy"
-              />
-            </Reveal>
+            <Image
+              src="/images/classrooms.jpg"
+              alt="Brooklite Premier School bright, child-friendly classroom"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              loading="lazy"
+            />
           </div>
           <div className="absolute left-4 top-4 rounded-2xl bg-white/95 px-4 py-3 shadow-sm">
             <p className="font-display text-xl font-extrabold text-mint-700">Lurambi,</p>
             <p className="text-xs font-bold uppercase tracking-wider text-royal-800">Kakamega Town</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-5">
+        <StaggerGroup className="mt-5 grid grid-cols-2 gap-5">
           <StaggerItem>
             <div className="rounded-3xl bg-royal-800 p-5 text-white shadow-md">
               <p className="font-display text-3xl font-extrabold text-sunflower-400">100%</p>
@@ -71,8 +69,8 @@ export function AboutSection({ about }: { about: AboutContent | null }) {
               </p>
             </div>
           </StaggerItem>
-        </div>
-      </StaggerGroup>
+        </StaggerGroup>
+      </div>
     </div>
   );
 }

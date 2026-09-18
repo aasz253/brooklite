@@ -3,18 +3,16 @@ import { ArrowRight, CalendarRange } from "lucide-react";
 import type { ClassLevel } from "@/lib/types/school";
 import { getIcon } from "@/lib/icons";
 import { SmartImage } from "@/components/shared/smart-image";
-import { StaggerGroup, StaggerItem } from "@/components/shared/motion";
 
 export function Curriculum({ classes }: { classes: ClassLevel[] }) {
   if (classes.length === 0) return null;
 
   return (
-    <StaggerGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid content-stretch gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {classes.map((classLevel) => {
         const Icon = getIcon(classLevel.icon);
         return (
-          <StaggerItem key={classLevel.id} className="h-full">
-            <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-royal-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+            <article key={classLevel.id} className="group flex h-full flex-col overflow-hidden rounded-3xl border border-royal-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <SmartImage
                   src={classLevel.imageUrl}
@@ -50,10 +48,9 @@ export function Curriculum({ classes }: { classes: ClassLevel[] }) {
                 ) : null}
               </div>
             </article>
-          </StaggerItem>
         );
       })}
-    </StaggerGroup>
+    </div>
   );
 }
 

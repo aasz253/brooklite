@@ -72,8 +72,8 @@ export function Footer({
 
   return (
     <footer className="bg-royal-950 text-white">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="font-display text-xl font-bold text-white">
               Brooklite
@@ -170,11 +170,18 @@ export function Footer({
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-5 text-xs text-white/50 sm:mt-12 sm:flex-row">
           <p>
             © {year} {settings.schoolName}. All rights reserved.
           </p>
-          <p>Website developed by Sifuna Codex.</p>
+          <a
+            href="https://sifunacodex.top"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-white/60 transition-colors hover:text-sunflower-400"
+          >
+            Website developed by Sifuna Codex.
+          </a>
         </div>
       </div>
     </footer>

@@ -22,7 +22,7 @@ export function Reveal({ children, className, delay = 0, y = 24, as = "div" }: R
       className={className}
       initial={{ opacity: 0, y: reduceMotion ? 0 : y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ duration: 0.6, delay, ease: EASE }}
     >
       {children}
@@ -50,7 +50,7 @@ export function StaggerGroup({ children, className }: { children: ReactNode; cla
       variants={containerVariants}
       initial={reduceMotion ? "show" : "hidden"}
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, amount: 0.05 }}
     >
       {children}
     </motion.div>

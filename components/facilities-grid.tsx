@@ -2,7 +2,6 @@ import type { Facility } from "@/lib/types/school";
 import { getIcon } from "@/lib/icons";
 import { SmartImage } from "@/components/shared/smart-image";
 import { StaggerGroup, StaggerItem } from "@/components/shared/motion";
-import { Reveal } from "@/components/shared/motion";
 
 export function FacilitiesGrid({ facilities }: { facilities: Facility[] }) {
   if (facilities.length === 0) return null;
@@ -12,8 +11,7 @@ export function FacilitiesGrid({ facilities }: { facilities: Facility[] }) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      <Reveal className="h-full">
-        <article className="group relative flex h-full min-h-[24rem] flex-col justify-end overflow-hidden rounded-3xl shadow-lg ring-1 ring-royal-100">
+      <article className="group relative flex h-full min-h-[24rem] flex-col justify-end overflow-hidden rounded-3xl shadow-lg ring-1 ring-royal-100">
           <div className="absolute inset-0">
             <SmartImage
               src={featured.imageUrl}
@@ -36,7 +34,6 @@ export function FacilitiesGrid({ facilities }: { facilities: Facility[] }) {
             </p>
           </div>
         </article>
-      </Reveal>
 
       <StaggerGroup className="grid gap-6 sm:grid-cols-2">
         {others.map((facility) => {

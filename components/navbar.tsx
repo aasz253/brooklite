@@ -105,7 +105,7 @@ export function Navbar({ settings }: { settings: SchoolSettings }) {
       {open ? (
         <div
           id="mobile-navigation"
-          className="border-t border-royal-100 bg-white/95 px-4 py-4 backdrop-blur-md md:hidden"
+          className="absolute inset-x-4 top-full z-50 mx-auto mt-2 max-w-sm rounded-2xl border border-royal-100 bg-white p-3 shadow-xl shadow-royal-950/10 ring-1 ring-royal-950/5 backdrop-blur-md md:hidden"
         >
           <ul className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
@@ -126,7 +126,7 @@ export function Navbar({ settings }: { settings: SchoolSettings }) {
               </li>
             ))}
           </ul>
-          <div className="mt-3">
+          <div className="mt-2 p-1">
             <Button href="/admissions" onClick={() => setOpen(false)} className="w-full">
               Enroll Now
             </Button>
