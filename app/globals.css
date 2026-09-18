@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-plus-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  /* Royal Blue — primary brand */
+  --color-royal-50: #eef4ff;
+  --color-royal-100: #dde7ff;
+  --color-royal-200: #c0d2ff;
+  --color-royal-300: #93b1ff;
+  --color-royal-400: #5f86fe;
+  --color-royal-500: #3a5cf8;
+  --color-royal-600: #2139e6;
+  --color-royal-700: #1a2dc4;
+  --color-royal-800: #1e3a8a;
+  --color-royal-900: #16306f;
+  --color-royal-950: #0e1d4d;
+
+  /* Sunflower Yellow — accent */
+  --color-sunflower-50: #fffbeb;
+  --color-sunflower-100: #fef3c7;
+  --color-sunflower-200: #fde68a;
+  --color-sunflower-300: #fcd34d;
+  --color-sunflower-400: #fbbf24;
+  --color-sunflower-500: #f59e0b;
+  --color-sunflower-600: #d97706;
+  --color-sunflower-700: #b45309;
+  --color-sunflower-800: #92400e;
+  --color-sunflower-900: #78350f;
+
+  /* Mint Green — secondary accent */
+  --color-mint-50: #ecfdf5;
+  --color-mint-100: #d1fae5;
+  --color-mint-200: #a7f3d0;
+  --color-mint-300: #6ee7b7;
+  --color-mint-400: #34d399;
+  --color-mint-500: #10b981;
+  --color-mint-600: #059669;
+  --color-mint-700: #047857;
+  --color-mint-800: #065f46;
+  --color-mint-900: #064e3b;
+
+  /* Off-white background */
+  --color-offwhite: #f8fafc;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-offwhite);
+  color: var(--color-royal-950);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Visible, consistent focus states for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-sunflower-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
