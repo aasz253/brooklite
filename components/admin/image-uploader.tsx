@@ -26,22 +26,6 @@ interface ImageUploaderProps {
   compact?: boolean;
 }
 
-function readDimensions(file: File): Promise<{ width: number; height: number }> {
-  return new Promise((resolve) => {
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight });
-      URL.revokeObjectURL(url);
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      resolve({ width: 0, height: 0 });
-    };
-    img.src = url;
-  });
-}
-
 export function ImageUploader({
   value,
   onChange,
@@ -60,11 +44,6 @@ export function ImageUploader({
     }
     if (file.size > MAX_SIZE) {
       setError("Image must be 5 MB or smaller.");
-      return;
-    }
-    const dimensions = await readDimensions(file);
-    if (dimensions.width > 0 && dimensions.height > 0 && (dimensions.width < 200 || dimensions.height < 200)) {
-      setError("Please upload an image at least 200px wide and 200px tall.");
       return;
     }
 
