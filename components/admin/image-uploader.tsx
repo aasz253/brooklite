@@ -8,6 +8,21 @@ import { cn } from "@/lib/utils";
 const ACCEPTED = ["image/jpeg", "image/png", "image/webp"];
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 
+function getImageDimensions(file: File): Promise<{ width: number; height: number }> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve({ width: img.width, height: img.height });
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = () => {
+      resolve({ width: 0, height: 0 });
+      URL.revokeObjectURL(img.src);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
 export interface UploadedImage {
   url: string;
   width: number | null;
@@ -62,6 +77,8 @@ export function ImageUploader({
         throw new Error(uploadResult.message);
       }
       const url = uploadResult.message;
+
+      const dimensions = await getImageDimensions(file);
 
       onChange(url);
       if (!altValue && onAltChange) {

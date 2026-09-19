@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
+import { SWRegister } from "@/components/shared/sw-register";
 import { getSchoolSettings, getSocialLinks } from "@/lib/data/content";
 import { siteUrl } from "@/lib/utils";
 
@@ -44,6 +45,16 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "/",
+  },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Brooklite",
+  },
+  icons: {
+    icon: "/icon-192.png",
+    apple: "/icon-192.png",
   },
   openGraph: {
     type: "website",
@@ -134,6 +145,11 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#1e3a8a" />
+        <link rel="apple-touch-icon" href="/icon-192.svg" />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main-content"
@@ -142,6 +158,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           Skip to main content
         </a>
         <SchoolStructuredData />
+        <SWRegister />
         <Navbar settings={settings} />
         <main id="main-content" className="flex-1">
           {children}
