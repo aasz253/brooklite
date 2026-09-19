@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { SWRegister } from "@/components/shared/sw-register";
+import { InstallBanner } from "@/components/shared/install-banner";
 import { getSchoolSettings, getSocialLinks } from "@/lib/data/content";
 import { siteUrl } from "@/lib/utils";
 
@@ -165,6 +166,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <Footer settings={settings} socialLinks={socialLinks} />
         <WhatsAppFloat phone={settings.whatsapp || settings.phone} />
+        <InstallBanner />
       </body>
     </html>
   );
